@@ -85,6 +85,59 @@ public class Client implements Runnable {
 
 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Explanation :-
+### Server.java
+1. `import java.rmi.Naming;`: Imports the `Naming` class from the `java.rmi` package. This class provides methods for binding and looking up remote objects in a remote object registry.
+2. `import java.rmi.RemoteException;`: Imports the `RemoteException` class from the `java.rmi` package. This class represents a remote exception, which is thrown when a remote method call encounters an error.
+3. `import java.rmi.registry.LocateRegistry;`: Imports the `LocateRegistry` class from the `java.rmi.registry` package. This class provides methods for obtaining a reference to a remote object registry.
+4. `import java.rmi.registry.Registry;`: Imports the `Registry` class from the `java.rmi.registry` package. This class represents a remote object registry, which stores bindings between names and remote objects.
+5. `import java.rmi.server.UnicastRemoteObject;`: Imports the `UnicastRemoteObject` class from the `java.rmi.server` package. This class provides functionality for exporting a remote object and obtaining a stub.
+7. `import java.util.ArrayList;`: Imports the `ArrayList` class from the `java.util` package. This class provides an implementation of a dynamic array.
+9. `public class Server implements Service {`: Defines a public class named `Server` that implements the `Service` interface. The `Server` class represents the server-side implementation of the remote service.
+11. `private ArrayList<String> messages = new ArrayList<>();`: Declares a private instance variable named `messages`, which is an `ArrayList` of `String` objects. This variable will store the received messages.
+13. `public Server() throws RemoteException {`: Defines a constructor for the `Server` class. It throws a `RemoteException`, indicating that it can potentially encounter remote communication errors.
+14. `UnicastRemoteObject.exportObject(this, 0);`: Exports the current object (`this`) as a remote object, making it available for remote method invocations. The second argument `0` specifies the port number for the remote object.
+16. `public void receiveMessage(String message) throws RemoteException {`: Implements the `receiveMessage` method specified in the `Service` interface. It throws a `RemoteException` to indicate that it can potentially encounter remote communication errors.
+17. `System.out.println("Received message: " + message);`: Prints a message to the console, indicating that a message has been received.
+18. `messages.add(message);`: Adds the received message to the `messages` list.
+21. `public static void main(String[] args) {`: The entry point of the `Server` application. It is a static method that takes an array of `String` arguments as input.
+23. `Server server = new Server();`: Creates an instance of the `Server` class.
+24. `Registry registry = LocateRegistry.createRegistry(1099);`: Creates a new `Registry` instance on port `1099`. This registry will be used to bind the remote object.
+25. `Naming.rebind("rmi://localhost/Service", server);`: Binds the `server` object to the name `"rmi://localhost/Service"` in the registry, making it available for remote clients to access.
+27. `System.out.println("Server ready");`: Prints a message to the console, indicating that the server is ready and running.
+29. `} catch (Exception e) {`: Catches any exception that occurs within the `try` block and handles it.
+30. `System.out.println("Server exception: "
+
+
+• Question 1 : What is the purpose of the RMI (Remote Method Invocation) in this code?
+Ans : In simple terms, the purpose of RMI (Remote Method Invocation) in this code is to allow the server and the client to communicate with each other over a network. It enables the server to expose certain methods that can be invoked by the client as if they were calling methods on a local object. RMI handles the complexity of network communication and allows the client to interact with the server's methods seamlessly, making it easier to build distributed systems where different parts of the program can run on separate machines but still work together as if they were running on the same machine.
+
+• Question 2 : What is the purpose of the Registry class in the Server class? How is it used to bind the remote object?
+Ans The purpose of the `Registry` class in the `Server` class is to provide a central repository for binding remote objects with unique names, making them accessible for remote clients.
+In this code, the `Registry` class is used to create a registry object on a specific port (in this case, port `1099`) using the `LocateRegistry.createRegistry()` method. This registry acts as a lookup service where remote objects can be registered and retrieved.
+In summary, the `Registry` class is responsible for creating a registry where the remote object is registered, and the `Naming.rebind()` method is used to bind the remote object with a unique name in the registry for client access.
+
+Questions 3 : What is the purpose of the Thread class in the Client class? How is it used
+Ans The purpose of the `Thread` class in the `Client` class is to enable concurrent execution of code. It allows the client to run in its own separate thread, allowing for asynchronous communication with the server while still being able to perform other tasks.
+`Thread` class in the `Client` class is used to create a separate thread for the client's code execution, allowing concurrent communication with the server while maintaining a responsive user interface. 
+
+Question 4 : explain the concept of stubs and skeletons in RMI?
+Ans - Stubs: A stub is a local object that acts as a representative or proxy for the remote object on the client side. When the client wants to invoke a method on the remote object, it actually calls the corresponding method on the stub. The stub is responsible for handling the communication details and transmitting the method call and any parameters to the server.
+- Skeletons: A skeleton is a server-side object that receives the method calls from the client stub and forwards them to the actual implementation of the remote object. It acts as an intermediary between the client stub and the server object. The skeleton receives the method call from the stub, extracts the necessary information, and invokes the corresponding method on the server object. It also handles any return values or exceptions generated by the method invocation and sends them back to the client stub.
+
+Question 5 : What is the purpose of the UnicastRemoteObject.exportObject()
+Answer : The purpose of the `UnicastRemoteObject.exportObject()` method in RMI (Remote Method Invocation) is to export a remote object and make it available for remote method invocations.
+When a Java object needs to be accessed remotely, it must be exported as a remote object. The `exportObject()` method provided by the `UnicastRemoteObject` class facilitates this exportation process. It takes the remote object as a parameter and exports it, making it ready to receive remote method calls.
+In summary, the `UnicastRemoteObject.exportObject()` method serves the purpose of exporting a remote object, creating a stub for it, and binding the stub to a communication endpoint so that it can be accessed remotely by clients using RMI.
+
+Question 6 what is exception handling ?
+Answer : 1. `RemoteException`: This exception is handled in both the `Server` and `Client` classes. It is a checked exception that can occur during RMI communication. In the code, when a `RemoteException` occurs, the exception is caught using a `catch` block, and an error message is printed to the console.
+2. `Exception`: This generic exception is also handled in both the `Server` and `Client` classes. It is a superclass of all exceptions and is used as a catch-all for any other exceptions that may occur. When an `Exception` occurs, it is caught using a `catch` block, and an error message is printed to the console.
+Exception handling is crucial in preventing unexpected errors from crashing the program. It allows the code to gracefully handle exceptions and provide meaningful feedback or take alternative actions when an error occurs during the execution of the program.
+
+
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -704,4 +757,166 @@ if __name__ == '__main__':
 
     display()
     choice()
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    Ring algorithm 
+    
+import java.util.*;
 
+public class RingAlgorithm {
+    private int numOfProcesses;
+    private int[] processes;
+
+    public RingAlgorithm(int numOfProcesses) {
+        this.numOfProcesses = numOfProcesses;
+        processes = new int[numOfProcesses];
+        for (int i = 0; i < numOfProcesses; i++) {
+            processes[i] = i+1;
+        }
+    }
+
+    public int getLeader() {
+        Random random = new Random();
+        int startingProcess = random.nextInt(numOfProcesses) + 1;
+        int currentProcess = startingProcess;
+        while (true) {
+            System.out.println("Process " + currentProcess + " is the current process");
+            int nextProcess = currentProcess + 1;
+            if (nextProcess > numOfProcesses) {
+                nextProcess = 1;
+            }
+            System.out.println("Process " + currentProcess + " sends a message to process " + nextProcess);
+            if (nextProcess == startingProcess) {
+                return currentProcess;
+            }
+            currentProcess = nextProcess;
+        }
+    }
+
+    public static void main(String[] args) {
+        RingAlgorithm algorithm = new RingAlgorithm(5);
+        int leader = algorithm.getLeader();
+        System.out.println("Process " + leader + " is the leader");
+        }
+}
+
+
+----------------------------------
+Explaination
+----------------------------------
+The provided code is an implementation of the Ring Algorithm, a distributed algorithm used to elect a leader among a group of processes in a ring topology. Let's go through the code and understand it step by step:
+
+1. The class `RingAlgorithm` is defined. It has two instance variables: `numOfProcesses` (number of processes in the ring) and `processes` (an array to store the identifiers of the processes).
+
+2. The constructor `RingAlgorithm(int numOfProcesses)` is defined. It initializes the instance variables and populates the `processes` array with identifiers from 1 to `numOfProcesses`.
+
+3. The `getLeader()` method is defined. It implements the ring algorithm to elect a leader. It starts by generating a random starting process using the `Random` class. The range of random numbers is between 1 and the total number of processes.
+
+4. The `currentProcess` variable is initialized with the starting process. Then, a loop is started that continues indefinitely until a leader is found and returned.
+
+5. Inside the loop, the current process is printed, indicating which process is currently active.
+
+6. The `nextProcess` variable is calculated by adding 1 to the `currentProcess`. If the value exceeds the total number of processes, it wraps around to 1, forming a ring.
+
+7. The current process sends a message to the next process, and this message is printed, indicating the communication between processes.
+
+8. If the next process is equal to the starting process, it means that the message has completed a full loop in the ring and has returned to the starting process. In this case, the current process is returned as the leader.
+
+9. If the next process is not the starting process, the loop continues, and the `currentProcess` is updated to be the `nextProcess`. The process repeats, with each process sending a message to the next process until a leader is elected.
+
+10. The `main` method creates an instance of `RingAlgorithm` with 5 processes. It then calls the `getLeader()` method to determine the leader using the ring algorithm. Finally, it prints the identifier of the leader process.
+
+In summary, this code simulates the execution of the Ring Algorithm to elect a leader among a group of processes arranged in a ring topology. The algorithm randomly selects a starting process and passes a message around the ring until it returns to the starting process, electing a leader in the process.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6th 
+BullyAlgorithm.java
+
+import java.util.*;
+
+public class BullyAlgorithm {
+    private int numOfProcesses;
+    private int[] processes;
+    private boolean[] active;
+
+    public BullyAlgorithm(int numOfProcesses) {
+        this.numOfProcesses = numOfProcesses;
+        processes = new int[numOfProcesses];
+        active = new boolean[numOfProcesses];
+        for (int i = 0; i < numOfProcesses; i++) {
+            processes[i] = i+1;
+            active[i] = true;
+        }
+    }
+
+    public int getLeader() {
+        int leader = 0;
+        for (int i = 0; i < numOfProcesses; i++) {
+            if (active[i]) {
+                leader = processes[i];
+            }
+        }
+
+        for (int i = leader+1; i <= numOfProcesses; i++) {
+            if (active[i-1]) {
+                System.out.println("Process " + leader + " sends an election message to process " + i);
+                if (i == numOfProcesses) {
+                    return leader;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public void processCrashed(int processId) {
+        active[processId-1] = false;
+        System.out.println("Process " + processId + " crashed");
+        if (processId == numOfProcesses) {
+            int newLeader = getLeader();
+            System.out.println("Process " + newLeader + " is the new leader");
+        }
+    }
+
+    public static void main(String[] args) {
+        BullyAlgorithm algorithm = new BullyAlgorithm(5);
+        int leader = algorithm.getLeader();
+        System.out.println("Process " + leader + " is the initial leader");
+        algorithm.processCrashed(3);
+    }
+}
+
+----------------------------
+Explanation 
+----------------------------
+
+The given code represents an implementation of the Bully Algorithm, which is a leader election algorithm used in distributed systems. Let's go through the code step by step to understand its functionality:
+
+1. The code defines a class named `BullyAlgorithm`.
+2. It has three private instance variables: `numOfProcesses`, `processes`, and `active`.
+   - `numOfProcesses` stores the total number of processes in the system.
+   - `processes` is an array that represents the unique ID of each process.
+   - `active` is a boolean array that indicates whether each process is active or not.
+3. The constructor `BullyAlgorithm(int numOfProcesses)` initializes the object and sets up the processes and their initial active status.
+   - It assigns the total number of processes.
+   - It initializes the `processes` array with unique IDs from 1 to `numOfProcesses`.
+   - It sets all processes as active by setting the corresponding values in the `active` array to `true`.
+4. The `getLeader()` method determines the leader process in the system.
+   - It initializes a variable `leader` to 0.
+   - It iterates through the processes and finds the highest ID process that is active, assigning it to `leader`.
+   - Then, it starts another loop from `leader+1` to `numOfProcesses` to check if there are any processes with higher IDs that are active.
+   - If an active process with a higher ID is found, it prints a message indicating that the leader process sends an election message to that process.
+   - If the loop reaches the last process, it returns the current `leader` process.
+   - If no higher active process is found, it returns 0, indicating that the current `leader` process is the leader of the system.
+5. The `processCrashed(int processId)` method is called when a process with the given `processId` crashes.
+   - It sets the corresponding process in the `active` array to `false`, indicating that it is no longer active.
+   - It prints a message indicating that the process has crashed.
+   - If the crashed process was the last process (`processId == numOfProcesses`), it calls the `getLeader()` method to find a new leader and prints a message indicating the new leader process.
+6. The `main` method creates an instance of `BullyAlgorithm` with `numOfProcesses` set to 5.
+7. It calls the `getLeader()` method to find the initial leader process and prints a message indicating the initial leader.
+8. It calls the `processCrashed(3)` method to simulate the crash of process 3.
+   - The `active` array is updated accordingly.
+   - Since process 3 was the last process, it calls the `getLeader()` method again to find the new leader.
+   - It prints a message indicating the new leader process.
+
+Overall, this code implements the Bully Algorithm for leader election in a distributed system with a predefined number of processes. It demonstrates the process of finding the initial leader and handling a process crash by electing a new leader based on the remaining active processes.
