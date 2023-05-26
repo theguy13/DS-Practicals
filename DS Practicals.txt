@@ -323,7 +323,33 @@ def initiateSlaveClient(port=8080):
 if __name__ == '__main__':
     # initialize the Slave / Client
     initiateSlaveClient(port=8080)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Explanation 
 
+The provided code consists of a clock server (`server.py`) and a client process (`client.py`). Let's go through each file and explain their functionality.
+
+**server.py:**
+
+1. The `server.py` file sets up a clock server that communicates with multiple client processes.
+2. It imports necessary modules like `functools`, `dateutil`, `threading`, `datetime`, `socket`, and `time`.
+3. There is a `client_data` dictionary used to store client addresses and clock data.
+4. The `startReceivingClockTime` function is a nested thread function that runs in a separate thread for each connected client. It receives the clock time from the client, calculates the time difference between the received time and the current server time, and updates the `client_data` dictionary with this information.
+5. The `startConnecting` function is the master thread function responsible for accepting connections from clients. It runs in a loop and accepts incoming connections, spawns a new thread for each connected client using the `startReceivingClockTime` function, and starts receiving clock time from each client.
+6. The `getAverageClockDiff` function calculates the average time difference among all the connected clients.
+7. The `synchronizeAllClocks` function runs in a loop and initiates a synchronization cycle. It gets the average clock difference, and for each connected client, it calculates the synchronized time by adding the average clock difference to the current server time and sends the synchronized time back to the client.
+8. The `initiateClockServer` function initializes the clock server by creating a socket, binding it to a specific port, and starting the master connection thread and synchronization thread in separate threads.
+9. Finally, in the `__main__` block, it triggers the execution of the clock server by calling the `initiateClockServer` function with a specified port.
+
+**client.py:**
+
+1. The `client.py` file represents a client process that connects to the clock server.
+2. It imports necessary modules like `timeit`, `dateutil`, `threading`, `datetime`, `socket`, and `time`.
+3. The `startSendingTime` function is a thread function that sends the current time from the client to the server. It runs in a loop, sends the current time in a string format to the server, and waits for a few seconds before sending the next time.
+4. The `startReceivingTime` function is a thread function that receives the synchronized time from the server. It runs in a loop, receives data from the server in string format, parses it into a `datetime` object, and prints the synchronized time received from the server.
+5. The `initiateSlaveClient` function initializes the client process by creating a socket and connecting to the clock server. It then starts the sending and receiving threads in separate threads.
+6. Finally, in the `__main__` block, it triggers the execution of the client process by calling the `initiateSlaveClient` function with a specified port.
+
+Overall, this code sets up a clock server that receives clock time from multiple clients, calculates the average time difference, and synchronizes the clients' clocks by sending back the synchronized time. The clients continuously send their current time to the server and receive the synchronized time in return.
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
