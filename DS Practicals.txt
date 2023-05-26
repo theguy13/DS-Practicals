@@ -377,7 +377,69 @@ int main(){
         }
     }
 }
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Explanation :-
+1. `#include<stdio.h>`: This line includes the header file `stdio.h`, which contains functions for input and output operations like `printf()`.
+2. `#include<conio.h>`: This line includes the header file `conio.h`, which provides console input/output functions like `getch()`.
+3. `#include<dos.h>`: This line includes the header file `dos.h`, which contains functions for working with DOS operating system.
+4. `#include<time.h>`: This line includes the header file `time.h`, which contains functions for working with time-related operations.
+6. `void main()`: This line declares the main function, which is the starting point of the program.
+8. `int cs=0,pro=0;`: This line declares two variables `cs` and `pro` as integers and initializes them with 0.
+9. `double run=5;`: This line declares a variable `run` as a double and initializes it with the value 5.
+10. `char key='a';`: This line declares a variable `key` as a character and initializes it with the value 'a'.
+11. `time_t t1,t2;`: This line declares two variables `t1` and `t2` as time_t type, which is used to store time values.
+12. `printf("Press a key(except q) to enter a process into critical section.");`: This line displays the specified message on the console.
+13. `printf(" \nPress q at any time to exit.");`: This line displays another message on the console, indicating how to exit the program.
+14. `t1 = time(NULL) - 5;`: This line assigns the current time minus 5 seconds to the variable `t1`.
+16. `while(key!='q')`: This line starts a while loop that continues until the user enters the character 'q'.
+18. `while(!kbhit())`: This line starts a nested while loop that checks if a key has been pressed using `kbhit()` function. The loop continues until a key is pressed.
+20. `if(cs!=0)`: This line checks if the variable `cs` is not equal to 0. If true, it means a process is currently in the critical section.
+22. `t2 = time(NULL);`: This line assigns the current time to the variable `t2`.
+23. `if(t2-t1 > run)`: This line checks if the difference between `t2` and `t1` is greater than the value stored in `run`.
+25. `printf("Process%d ",pro-1);`: This line prints the message "Process" followed by the value of `pro-1`.
+26. `printf(" exits critical section.\n");`: This line prints the message "exits critical section" followed by a new line.
+27. `cs=0;`: This line sets the variable `cs` to 0, indicating that the critical section is now vacant.
+30. `key = getch();`: This line waits for a key to be pressed and assigns the pressed key to the variable `key`.
+31. `if(key!='q')`: This line checks if the pressed key is not equal to 'q'.
+33. `if(cs!=0)`: This line checks if the variable `cs` is not equal to 0, indicating that another process is currently executing the critical section.
+35. `printf("Error: Another process is currently executing critical section. Please wait till its execution is over.\n");`: This line displays an error message indicating that another process
+
+Question 1: What is token Ring algorithm ?
+Ans: Imagine you and your friends are sitting in a circle, passing around a special object called a "token." Only the person holding the token has the right to speak.
+In a computer network using the Token Ring algorithm, devices are connected in a similar circle, forming a ring. The token represents the permission to send data.
+Here's how it works:
+1. The token travels around the network in a specific order, just like you passing the object in a circle.
+2. When a device has the token, it can send data. It attaches its data to the token and lets it continue circulating.
+3. Each device checks the token as it passes by. If a device has data to send, it takes the token, attaches its data, and sends it to the next device.
+4. As the token and data move around the ring, each device checks if the data is meant for itself. If it is, the device takes the data and removes it from the ring.
+5. After a device finishes sending its data, it puts the token back into the ring, allowing the next device to have a turn.
+6. This process repeats continuously, ensuring that each device gets a fair chance to send its data.
+By passing around the token, only one device can send data at a time, making the communication more organized and efficient.
+
+Question 2 : What is Token ?
+Ans : In the Token Ring algorithm, a "token" is a special object that travels around a network in a circular fashion, granting permission to devices to transmit data. It's like a magical key that allows a device to have its turn to send information.
+Imagine you and your friends are sitting in a circle, passing around a special toy. Only the person holding the toy has the right to speak or share something interesting.
+In a computer network using the Token Ring algorithm, devices are connected in a similar circular arrangement, forming a ring. The token represents that special toy.
+In summary, the token is like a special toy that passes around a circular network. When a device receives the token, it gains the right to transmit data. By controlling the token's circulation, the Token Ring algorithm ensures that devices take turns in a coordinated manner, preventing data collisions and promoting efficient communication.
+
+Question 3 Explain the purpose of the token in the Token Ring algorithm?
+Ans : The purpose of the token in the Token Ring algorithm is to control access to the shared communication medium, such as a local area network (LAN), in a fair and orderly manner. It acts as a permission mechanism, granting a device the right to transmit data.
+Overall, the token in the Token Ring algorithm serves as a crucial element for orderly and efficient data transmission in a network. It enables fair access, prevents collisions, and maintains controlled and sequential communication among devices connected in a ring topology.
+
+Question 4 Describe the advantages and disadvantages of the Token Ring algorithm?
+Ans :
+Advantages:
+1. Controlled Access: The Token Ring algorithm provides controlled access to the network by using a token passing mechanism. This ensures that only one device has the right to transmit data at a given time, minimizing data collisions and maximizing network efficiency.
+2. Fairness: Each device in the network gets an equal opportunity to transmit data when it possesses the token. This fairness ensures that no device dominates the network, and all devices have a chance to utilize network resources.
+3. Deterministic Performance: The Token Ring algorithm offers deterministic performance, meaning that the timing and order of data transmission can be predicted and guaranteed. This predictability is advantageous in certain real-time applications where timing is critical.
+4. Stability: Once the token passes through the network, it continues to circulate, providing a stable and continuous communication medium. This stability reduces the chances of interruptions or disruptions in data transmission.
+Disadvantages:
+1. Complexity: Implementing and managing a Token Ring network can be more complex compared to other networking protocols. It requires specific hardware, such as a token ring network interface card, and meticulous configuration and setup procedures.
+2. Limited Scalability: Token Ring networks have inherent limitations in terms of scalability. Adding or removing devices from the network requires reconfiguration and can disrupt the network's operation. This limitation makes Token Ring less suitable for large networks with frequent changes in the number of devices.
+3. Cost: Token Ring networks can be more expensive to set up and maintain compared to other protocols like Ethernet. The specialized hardware and infrastructure required for Token Ring can be cost-prohibitive, especially for small or budget-conscious networks.
+4. Lower Bandwidth Efficiency: In Token Ring networks, the available bandwidth is shared among all devices in the network. This can result in lower bandwidth efficiency compared to protocols like Ethernet, where bandwidth is dynamically shared based on network demand.
+5. Limited Industry Support: Over time, the popularity and industry support for Token Ring have diminished. Ethernet has become the dominant networking protocol, and as a result, finding compatible Token Ring hardware, support, and resources can be challenging.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
