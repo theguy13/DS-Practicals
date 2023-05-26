@@ -109,6 +109,94 @@ Explanation :-
 29. `} catch (Exception e) {`: Catches any exception that occurs within the `try` block and handles it.
 30. `System.out.println("Server exception: "
 
+## Client.java
+
+The provided code represents a Java client application that communicates with a remote server using Java RMI (Remote Method Invocation). Let's go through the code step by step:
+
+1. Import Statements:
+   ```java
+   import java.rmi.Naming;
+   import java.rmi.RemoteException;
+   import java.rmi.registry.LocateRegistry;
+   import java.rmi.registry.Registry;
+   import java.util.Scanner;
+   ```
+
+   The necessary Java classes and interfaces are imported, including classes related to RMI, such as `Naming`, `RemoteException`, `LocateRegistry`, `Registry`, and `Scanner` for user input.
+
+2. `Client` Class:
+   ```java
+   public class Client implements Runnable {
+       private Service service;
+       // ...
+   }
+   ```
+
+   The `Client` class implements the `Runnable` interface, which allows it to be executed as a separate thread. It also has a private instance variable called `service`, which represents the remote service provided by the server.
+
+3. `Client` Constructor:
+   ```java
+   public Client(Service service) {
+       this.service = service;
+   }
+   ```
+
+   The constructor of the `Client` class is used to set the `service` variable with the provided `Service` object.
+
+4. `run` Method:
+   ```java
+   public void run() {
+       Scanner scanner = new Scanner(System.in);
+       while (true) {
+           System.out.print("Enter message: ");
+           String message = scanner.nextLine();
+           try {
+               service.receiveMessage(message);
+           } catch (RemoteException e) {
+               System.out.println("Client exception: " + e.toString());
+               e.printStackTrace();
+           }
+       }
+   }
+   ```
+
+   The `run` method, required by the `Runnable` interface, represents the main logic of the client application. It runs in an infinite loop, prompting the user to enter a message. Once a message is provided, the `service.receiveMessage(message)` method is invoked on the remote service to send the message to the server. If a `RemoteException` occurs during the remote method invocation, an error message is printed.
+
+5. `main` Method:
+   ```java
+   public static void main(String[] args) {
+       try {
+           Registry registry = LocateRegistry.getRegistry(1099);
+           Service service = (Service) Naming.lookup("rmi://localhost/Service");
+           Client client = new Client(service);
+           Thread thread = new Thread(client);
+           thread.start();
+       } catch (Exception e) {
+           System.out.println("Client exception: " + e.toString());
+           e.printStackTrace();
+       }
+   }
+   ```
+
+   The `main` method is the entry point of the client application. It performs the following steps:
+   - `LocateRegistry.getRegistry(1099)` retrieves the local RMI registry running on the default port 1099. If the RMI registry is running on a different port, you should replace `1099` with the appropriate port number.
+   - `Naming.lookup("rmi://localhost/Service")` looks up the remote service with the name "Service" using the RMI registry. The URL "rmi://localhost/Service" specifies the protocol (RMI) and the host (localhost) where the server is located. Adjust the URL if the server is running on a different host or if the service name is different.
+   - An instance of the `Client` class is created with the retrieved `Service` object.
+   - A new thread is created with the `Client` object and started using `thread.start()`.
+
+   If any exception occurs during the initialization or execution of the client, an error message is printed.
+
+That's the overall explanation of the provided `Client.java` code. It establishes
+
+ a connection with a remote server using RMI and allows the user to send messages to the server continuously.
+ 
+ 
+ 
+ 
+ 
+ Questions 
+
+
 
 • Question 1 : What is the purpose of the RMI (Remote Method Invocation) in this code?
 Ans : In simple terms, the purpose of RMI (Remote Method Invocation) in this code is to allow the server and the client to communicate with each other over a network. It enables the server to expose certain methods that can be invoked by the client as if they were calling methods on a local object. RMI handles the complexity of network communication and allows the client to interact with the server's methods seamlessly, making it easier to build distributed systems where different parts of the program can run on separate machines but still work together as if they were running on the same machine.
